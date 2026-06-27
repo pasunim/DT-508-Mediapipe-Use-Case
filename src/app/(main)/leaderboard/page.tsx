@@ -14,12 +14,12 @@ export default async function LeaderboardPage() {
     take: 20,
   });
 
-  const userIds = results.map(r => r.userId);
+  const userIds: string[] = results.map((r) => r.userId);
   const users = await prisma.user.findMany({
     where: { id: { in: userIds } },
     select: { id: true, username: true, avatarColor: true },
   });
-  const userMap = Object.fromEntries(users.map(u => [u.id, u]));
+  const userMap = Object.fromEntries(users.map((u) => [u.id, u]));
 
   const board = results.map((r, i) => ({
     rank: i + 1,
