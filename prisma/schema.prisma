@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String       @id @default(cuid())
+  email        String       @unique
+  username     String       @unique
+  passwordHash String
+  avatarColor  String       @default("#7c3aed")
+  createdAt    DateTime     @default(now())
+  gameResults  GameResult[]
+}
+
+model GameResult {
+  id          String        @id @default(cuid())
+  userId      String
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  score       Int
+  totalRounds Int
+  playedAt    DateTime      @default(now())
+  rounds      RoundResult[]
+}
+
+model RoundResult {
+  id           String     @id @default(cuid())
+  gameResultId String
+  gameResult   GameResult @relation(fields: [gameResultId], references: [id], onDelete: Cascade)
+  gestureId    Int
+  gestureName  String
+  correct      Boolean
+  elapsedSec   Float?
+}

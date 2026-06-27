@@ -1,0 +1,14 @@
+.git
+.gitignore
+.DS_Store
+.claude
+.env
+.env.*
+!.env.example
+.next
+node_modules
+_note
+README.md
+Dockerfile
+.dockerignore
+*.log
